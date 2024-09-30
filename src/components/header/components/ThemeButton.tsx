@@ -8,14 +8,14 @@ export default function ThemeButton() {
 
   React.useEffect(() => {
     document.body.classList.remove("dark-theme", "light-theme");
-    document.body.classList.add(context.theme);
+    document.body.classList.add(`${context.theme}-theme`);
   }, [context.theme]);
 
   return <ActionButton onClick={() => {
-    const newTheme = context.theme === "dark-theme" ? "light-theme" : "dark-theme"
+    const newTheme = context.theme === "dark" ? "light" : "dark"
     context.setTheme(newTheme);
     localStorage.setItem('theme', newTheme);
   }}>
-    {context.theme === "dark-theme" ? <HalfMoon /> : <SunLight />}
+    {context.theme === "dark" ? <HalfMoon /> : <SunLight />}
   </ActionButton>
 }

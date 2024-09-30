@@ -15,7 +15,7 @@ const defaultValue: AppContext = {
   lang: 'cn',
   version: '',
   versions: [],
-  theme: "light-theme",
+  theme: "light",
   setLang: () => { },
   setVersion: () => { },
   setTheme: () => { }
@@ -26,7 +26,17 @@ AppContext.displayName = 'AppContext';
 
 const AppContextProvider = (props: PropsWithChildren) => {
   const localStorageLang = localStorage.getItem('lang') === 'en' ? 'en' : 'cn';
-  const localStorageTheme = localStorage.getItem('theme') === 'dark-theme' ? 'dark-theme' : 'light-theme';
+
+  // Compatible with legacy code
+  const oldTheme = localStorage.getItem('theme');
+  if (oldTheme === 'light-theme') {
+    localStorage.setItem('theme', 'light');
+  }
+  else if (oldTheme === 'dark-theme') {
+    localStorage.setItem('theme', 'dark');
+  }
+
+  const localStorageTheme = localStorage.getItem('theme') === 'dark' ? 'dark' : 'light';
   const localStorageVersion = localStorage.getItem('version') || '';
 
   const [lang, setLang] = useState<'cn' | 'en'>(
